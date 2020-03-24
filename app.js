@@ -7,8 +7,11 @@ const mongoose = require('mongoose');
 const app = express()
 
 // DB connection
-const uri = 'mongodb://localhost:27017/mevn';
-const options = {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true};
+// Local connection
+// const uri = 'mongodb://localhost:27017/mevn'
+// Mongo altas cluster connection
+const uri = 'mongodb+srv://MEVN:mvcpoophp7@mevn-s4gfj.mongodb.net/mevn?retryWrites=true&w=majority'
+const options = {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}
 
 mongoose.connect(uri, options).then(
   () => { console.log('connect to mongodb') },

@@ -55,6 +55,9 @@ router.put('/notes/:id', async(request, response) => {
   const _id = request.params.id
   const body = request.body
   try {
+    if (body.name === '') {
+      return response.status(400).json({ message: "Name is required" })
+    }
     const noteDB = await Note.findByIdAndUpdate(_id, body, {new: true})
     response.json(noteDB)
   } catch (error) {
