@@ -1,12 +1,14 @@
 import express, { request, response } from 'express'
 const router = express.Router()
+const {verifyAuth, verifyAdminUser} = require('../middlewares/auth')
 
 // Import note model
 import Note from '../models/note'
 
 // Add a note
-router.post('/notes', async(request, response) => {
-  const body = request.body;  
+router.post('/notes', verifyAuth, async(request, response) => {
+  const body = request.body
+  body.userId = request.user._id
   try {
     const noteDB = await Note.create(body)
     response.status(200).json(noteDB)
@@ -30,13 +32,17 @@ router.get('/notes/:id', async(request, response) => {
 })
 
 // all notes
-router.get('/notes', async(request, response) => {
+router.get('/notes', verifyAuth, async(request, response) => {
+
+  const userId = request.user._id
+
   try {
-    const noteDB = await Note.find()
+    const noteDB = await Note.find({userId})
     response.json(noteDB)
   } catch (error) {
     returnError(response, error, 400, "Whoops there is an error")
   }
+
 })
 
 // delete a note 

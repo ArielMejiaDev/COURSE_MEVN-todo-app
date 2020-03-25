@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node app.js --exec",
-    "dev": "nodemon app.js",
-    "devbabel": "nodemon app.js --exec babel-node"
+    "dev": "nodemon app.js --exec babel-node"
   },
   "keywords": [],
   "author": "",
@@ -16,11 +15,15 @@
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
+    "bcrypt": "^4.0.1",
     "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.5",
-    "morgan": "^1.10.0"
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.10.0",
+    "underscore": "^1.9.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
