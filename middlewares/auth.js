@@ -7,7 +7,7 @@ const verifyAuth = (request, response, next) => {
     jwt.verify(token, 'fizzbuzz', (error, decoded) => {
 
         if (error) {
-            return response.status(400).json({
+            return response.status(401).json({
                 message: 'User not valid or not authorize',
                 error
             })
