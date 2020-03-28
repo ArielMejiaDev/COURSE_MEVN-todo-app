@@ -28,16 +28,16 @@ router.post('/users', async(request, response) => {
     }
 })
 
-router.put('/users/:id', [verifyAuth, verifyAdminUser], async(request, response) => {
+// router.put('/users/:id', [verifyAuth, verifyAdminUser], async(request, response) => {
+router.put('/users/:id', [verifyAuth], async(request, response) => {
     const id = request.params.id
-    const body = _.pick(['name', 'email', 'password', 'active'])
+    const body = _.pick(request.body, ['name', 'email', 'password', 'active'])
 
     if (request.body.password) {
         body.password = bcrypt.hashSync(request.body.password, saltRounds)
     }
-
     try {
-        const userDB = await User.findByIdAndUpdate(id, body, { new:true, runValidators: true })
+        const userDB = await User.findByIdAndUpdate(id, body, { new:true, runValidators: true ,  context: 'query' })
         return response.json(userDB)
     } catch (error) {
         return response.status(400).json({

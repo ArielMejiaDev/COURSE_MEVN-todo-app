@@ -31,14 +31,31 @@ router.get('/notes/:id', async(request, response) => {
   }
 })
 
-// all notes
+// // all notes
+// router.get('/notes', verifyAuth, async(request, response) => {
+
+//   const userId = request.user._id
+
+//   try {
+//     const noteDB = await Note.find({userId})
+//     response.json(noteDB)
+//   } catch (error) {
+//     returnError(response, error, 400, "Whoops there is an error")
+//   }
+
+// })
+
+// all notes paginated
 router.get('/notes', verifyAuth, async(request, response) => {
 
   const userId = request.user._id
 
   try {
-    const noteDB = await Note.find({userId})
-    response.json(noteDB)
+    const limit = Number(request.query.limit) || 5
+    const skip = Number(request.query.skip) || 0
+    const noteDB = await Note.find({userId}).limit(limit).skip(skip)
+    const total = await Note.find({userId}).countDocuments()
+    response.json({notes: noteDB, total})
   } catch (error) {
     returnError(response, error, 400, "Whoops there is an error")
   }
